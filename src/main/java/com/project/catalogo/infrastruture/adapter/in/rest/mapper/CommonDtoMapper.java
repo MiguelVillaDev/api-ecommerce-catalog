@@ -3,6 +3,7 @@ package com.project.catalogo.infrastruture.adapter.in.rest.mapper;
 import com.project.catalogo.infrastruture.adapter.in.rest.response.CommonListResponse;
 import com.project.catalogo.infrastruture.adapter.in.rest.response.CommonResponse;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -54,6 +55,16 @@ public abstract class CommonDtoMapper<M, D, R> {
             return value == null || value.isBlank()
                     ? null
                     : Integer.valueOf(value);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    protected BigDecimal parseOptionalToBigDecimal(String value) {
+        try {
+            return value == null || value.isBlank()
+                    ? null
+                    : new BigDecimal(value);
         } catch (NumberFormatException e) {
             return null;
         }
