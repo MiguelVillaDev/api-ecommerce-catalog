@@ -15,7 +15,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({
             MethodArgumentNotValidException.class,
             IllegalArgumentException.class,
-            EntityNotFoundException.class
+            EntityNotFoundException.class,
+            BusinessException.class
     })
     public ResponseEntity<Map<String, String>> handleExceptions(Exception ex) {
 
@@ -28,7 +29,7 @@ public class GlobalExceptionHandler {
             message = validationEx.getBindingResult()
                     .getFieldErrors()
                     .stream()
-                    .map(error -> "El campo " + error.getField() + " " + error.getDefaultMessage())
+                    .map(error -> error.getDefaultMessage() !=null ? error.getDefaultMessage() : "Error de validación")
                     .findFirst()
                     .orElse("Error de validación");
 
