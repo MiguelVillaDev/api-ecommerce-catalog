@@ -4,6 +4,7 @@ import com.project.catalogo.application.port.in.CategoryPortIn;
 import com.project.catalogo.domain.model.CategoryModel;
 import com.project.catalogo.infrastruture.adapter.in.rest.dto.CategoryDto;
 import com.project.catalogo.infrastruture.adapter.in.rest.dto.CategoryRequest;
+import com.project.catalogo.infrastruture.adapter.in.rest.dto.CategoryUpdateRequest;
 import com.project.catalogo.infrastruture.adapter.in.rest.mapper.CategoryDtoMapper;
 import com.project.catalogo.infrastruture.adapter.in.rest.response.CommonListResponse;
 import com.project.catalogo.infrastruture.adapter.in.rest.response.CommonResponse;
@@ -30,6 +31,18 @@ public class CategoryController {
                         "Categorías obtenidas exitosamente"
                 )
         );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CommonResponse<CategoryDto>> findById(@PathVariable Integer id){
+        CategoryModel categoryModel = CategoryModel.builder().id(id).build();
+        return ResponseEntity.ok(
+                categoryDtoMapper.buildResponse(
+                        categoryPortIn.findById(categoryModel),
+                        "Categoría obtenida exitosamente"
+                )
+        );
+
     }
 
     @PostMapping()
@@ -60,7 +73,17 @@ public class CategoryController {
         );
     }
 
-//    @PutMapping("/{id}");
+    @PatchMapping("/{id}")
+    public ResponseEntity<CommonResponse<CategoryDto>> updateCategory(@PathVariable  Integer id, @Valid @RequestBody CategoryUpdateRequest request ){
+        CategoryModel categoryModel = CategoryModel.builder().id(id).build();
+
+        return ResponseEntity.ok(
+                categoryDtoMapper.buildResponse(
+                        categoryPortIn.updateCategory(categoryModel, request),
+                        "Categoria actualizada exitosamente"
+                )
+        );
+    }
 
 
 
