@@ -3,7 +3,7 @@ package com.project.catalogo.application.service;
 import com.project.catalogo.application.port.in.CategoryPortIn;
 import com.project.catalogo.application.port.out.CategoryPortOut;
 import com.project.catalogo.domain.model.CategoryModel;
-import com.project.catalogo.infrastruture.adapter.in.rest.dto.CategoryUpdateRequest;
+import com.project.catalogo.infrastruture.adapter.in.rest.dto.CategoryRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +34,7 @@ public class CategoryService implements CategoryPortIn {
     }
 
     @Override
-    public CategoryModel updateCategory(CategoryModel model, CategoryUpdateRequest request) {
+    public CategoryModel updateCategory(CategoryModel model, CategoryRequest request) {
         return categoryPortOut.update(model, request);
     }
 

@@ -2,7 +2,7 @@ package com.project.catalogo.infrastruture.adapter.out.persistence;
 
 import com.project.catalogo.application.port.out.CategoryPortOut;
 import com.project.catalogo.domain.model.CategoryModel;
-import com.project.catalogo.infrastruture.adapter.in.rest.dto.CategoryUpdateRequest;
+import com.project.catalogo.infrastruture.adapter.in.rest.dto.CategoryRequest;
 import com.project.catalogo.infrastruture.adapter.out.persistence.entity.CategoryEntity;
 import com.project.catalogo.infrastruture.adapter.out.persistence.repository.CategoryRepository;
 import com.project.catalogo.infrastruture.mapper.CategoryMapper;
@@ -55,7 +55,7 @@ public class CategoryRepositoryImpl implements CategoryPortOut {
     }
 
     @Override
-    public CategoryModel update(CategoryModel model, CategoryUpdateRequest request){
+    public CategoryModel update(CategoryModel model, CategoryRequest request){
 
         CategoryEntity entity  = categoryMapper.convertToEntity(this.findOne(model));
 

@@ -2,7 +2,7 @@ package com.project.catalogo.infrastruture.mapper;
 
 
 import com.project.catalogo.domain.model.CategoryModel;
-import com.project.catalogo.infrastruture.adapter.in.rest.dto.CategoryUpdateRequest;
+import com.project.catalogo.infrastruture.adapter.in.rest.dto.CategoryRequest;
 import com.project.catalogo.infrastruture.adapter.out.persistence.entity.CategoryEntity;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +36,7 @@ public class CategoryMapper extends CommonMapper<CategoryEntity, CategoryModel> 
                 .build();
     }
 
-    public void updateEntityFromRequest(CategoryEntity entity, CategoryUpdateRequest request) {
+    public void updateEntityFromRequest(CategoryEntity entity, CategoryRequest request) {
         if (request.getName() != null) entity.setName(request.getName());
         if (request.getDescription() != null) entity.setDescription(request.getDescription());
 
