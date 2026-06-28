@@ -8,6 +8,8 @@ import com.project.catalogo.infrastruture.mapper.ProductMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -43,6 +45,17 @@ public class ProductRepositoryImpl implements ProductPortOut {
 
         return productMapper.convertToModel(entity);
     }
+
+    @Override
+    public Page<ProductModel> findByCategoryId(
+            ProductModel model,
+            Pageable pageable
+    ) {
+        return productRepository
+                .findByCategoryIdAndStockGreaterThan(model.getCategoryId(), 0, pageable)
+                .map(productMapper::convertToModel);
+    }
+
 
 
 }

@@ -4,6 +4,8 @@ import com.project.catalogo.application.port.in.ProductPortIn;
 import com.project.catalogo.application.port.out.ProductPortOut;
 import com.project.catalogo.domain.model.ProductModel;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +29,11 @@ public class ProductService implements ProductPortIn {
     @Override
     public ProductModel deleteProduct(ProductModel model) {
         return productPortOut.delete(model);
+    }
+
+    @Override
+    public Page<ProductModel> findByCategoryId(ProductModel model, Pageable pageable){
+        return  productPortOut.findByCategoryId(model, pageable);
     }
 
 }

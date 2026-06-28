@@ -9,6 +9,10 @@ import com.project.catalogo.infrastruture.adapter.in.rest.response.CommonListRes
 import com.project.catalogo.infrastruture.adapter.in.rest.response.CommonResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,7 +63,33 @@ public class ProductController {
         );
     }
 
-//    @PutMapping("/{id}");
+    @GetMapping("/category")
+    public ResponseEntity<CommonResponse<Page<ProductDto>>> findProductsByCategory(
+            @RequestParam(name = "category_id") Integer categoryId,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "12") Integer size,
+            @RequestParam(name = "sort_by",required = false) String sortBy) {
+
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(sortBy).ascending()
+        );
+        ProductModel productModel = ProductModel.builder().categoryId(categoryId).build();
+
+        Page<ProductDto> response = productPortIn
+                .findByCategoryId(productModel, pageable)
+                .map(productDtoMapper::convertToDto);
+
+        return ResponseEntity.ok(
+                CommonResponse.<Page<ProductDto>>builder()
+                        .response(response)
+                        .message("Productos obtenidos exitosamente")
+                        .build()
+        );
+    }
+
+
 
 
 
