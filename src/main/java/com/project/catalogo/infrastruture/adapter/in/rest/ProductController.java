@@ -70,14 +70,29 @@ public class ProductController {
         );
     }
 
-    @PatchMapping("/{id}/discount/{val}")
-    public ResponseEntity<CommonResponse<ProductDto>> setDiscountProduct(@PathVariable  Integer id, @PathVariable Integer val ){
+    @PatchMapping("/{id}/discount")
+    public ResponseEntity<CommonResponse<ProductDto>> setDiscountProduct(@PathVariable  Integer id,@Valid @RequestBody DiscountRequestDto discount){
+        ProductModel productModel = ProductModel.builder().id(id).build();
         return ResponseEntity.ok(
                 productDtoMapper.buildResponse(
-                        productPortIn.discountValue(id, val),
-                        "Descuento actualizado exitosamente"
+                        productPortIn.discountValue(productModel, discount),
+                        "Descuento de " + discount.getDiscount() + "% actualizado exitosamente"
                 )
         );
+    }
+
+
+    @GetMapping("/{id}/availability")
+    public ResponseEntity<CommonResponse<AvailabilityProductDto>> showAvailabilityProduct(@PathVariable Integer id){
+        ProductModel productModel = ProductModel.builder().id(id).build();
+        AvailabilityProductDto availabilityProduct = productDtoMapper.convertToAvailability(productPortIn.availability(productModel));
+
+        return ResponseEntity.ok(
+                CommonResponse.<AvailabilityProductDto>builder()
+                        .message("Producto disponible para compar.")
+                        .response(availabilityProduct).build()
+        );
+
     }
 
 

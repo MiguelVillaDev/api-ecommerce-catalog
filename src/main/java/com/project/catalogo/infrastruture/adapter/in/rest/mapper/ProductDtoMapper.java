@@ -1,6 +1,7 @@
 package com.project.catalogo.infrastruture.adapter.in.rest.mapper;
 
 import com.project.catalogo.domain.model.ProductModel;
+import com.project.catalogo.infrastruture.adapter.in.rest.dto.AvailabilityProductDto;
 import com.project.catalogo.infrastruture.adapter.in.rest.dto.ProductDto;
 import com.project.catalogo.infrastruture.adapter.in.rest.dto.ProductRequest;
 import lombok.AllArgsConstructor;
@@ -61,6 +62,19 @@ public class ProductDtoMapper extends CommonDtoMapper<ProductModel, ProductDto, 
                 .urlImage(request.getUrlImage())
                 .isActive(request.getIsActive())
                 .build();
+    }
+
+    public AvailabilityProductDto convertToAvailability(ProductModel model){
+        if (model == null) {
+            return null;
+        }
+
+        return AvailabilityProductDto.builder()
+                .name(model.getName())
+                .price(model.getPrice())
+                .stock(model.getStock())
+                .build();
+
     }
 }
 
