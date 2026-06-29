@@ -36,4 +36,9 @@ public class ProductService implements ProductPortIn {
         return  productPortOut.findByCategoryId(model, pageable);
     }
 
+    @Override
+    public Page<ProductModel> findByPriority(ProductModel model, Pageable pageable){
+        return  productPortOut.findByPriority(model, pageable);
+    }
+
 }

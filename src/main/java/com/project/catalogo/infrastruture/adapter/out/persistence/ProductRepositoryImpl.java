@@ -57,5 +57,15 @@ public class ProductRepositoryImpl implements ProductPortOut {
     }
 
 
+    @Override
+    public Page<ProductModel> findByPriority(
+            ProductModel model,
+            Pageable pageable
+    ) {
+        return productRepository
+                .findByPriorityAndStockGreaterThan(model.getPriority(), 0, pageable)
+                .map(productMapper::convertToModel);
+    }
+
 
 }

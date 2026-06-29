@@ -4,6 +4,7 @@ import com.project.catalogo.application.port.in.ProductPortIn;
 import com.project.catalogo.domain.model.ProductModel;
 import com.project.catalogo.infrastruture.adapter.in.rest.dto.ProductDto;
 import com.project.catalogo.infrastruture.adapter.in.rest.dto.ProductRequest;
+import com.project.catalogo.infrastruture.adapter.in.rest.mapper.PageProductDtoMapper;
 import com.project.catalogo.infrastruture.adapter.in.rest.mapper.ProductDtoMapper;
 import com.project.catalogo.infrastruture.adapter.in.rest.response.CommonListResponse;
 import com.project.catalogo.infrastruture.adapter.in.rest.response.CommonResponse;
@@ -23,6 +24,7 @@ public class ProductController {
 
     private final ProductPortIn productPortIn;
     private final ProductDtoMapper productDtoMapper;
+    private final PageProductDtoMapper pageProductDtoMapper;
 
     @GetMapping
     public ResponseEntity<CommonListResponse<ProductDto>> findAll() {
@@ -70,6 +72,9 @@ public class ProductController {
             @RequestParam(defaultValue = "12") Integer size,
             @RequestParam(name = "sort_by",required = false) String sortBy) {
 
+        if (sortBy == null){
+            sortBy = "priority";
+        }
         Pageable pageable = PageRequest.of(
                 page,
                 size,
@@ -77,18 +82,37 @@ public class ProductController {
         );
         ProductModel productModel = ProductModel.builder().categoryId(categoryId).build();
 
-        Page<ProductDto> response = productPortIn
-                .findByCategoryId(productModel, pageable)
-                .map(productDtoMapper::convertToDto);
 
         return ResponseEntity.ok(
-                CommonResponse.<Page<ProductDto>>builder()
-                        .response(response)
-                        .message("Productos obtenidos exitosamente")
-                        .build()
+                pageProductDtoMapper.buildResponse(
+                        productPortIn.findByCategoryId(productModel, pageable),
+                        "Productos obtenidos exitosamente"
+                )
         );
     }
 
+
+    @GetMapping("/priority")
+    public ResponseEntity<CommonResponse<Page<ProductDto>>> findProductsByPriority(
+            @RequestParam(defaultValue = "1") Integer priority,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "12") Integer size) {
+
+
+        Pageable pageable = PageRequest.of(
+                page,
+                size
+        );
+        ProductModel productModel = ProductModel.builder().priority(priority).build();
+
+
+        return ResponseEntity.ok(
+                pageProductDtoMapper.buildResponse(
+                        productPortIn.findByPriority(productModel, pageable),
+                        "Productos obtenidos exitosamente"
+                )
+        );
+    }
 
 
 

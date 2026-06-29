@@ -60,6 +60,7 @@ public class ProductDtoMapper extends CommonDtoMapper<ProductModel, ProductDto, 
                 .webName(request.getWebName())
                 .urlImage(request.getUrlImage())
                 .isActive(request.getIsActive())
+                .priority(parseOptionalToInteger(request.getPriority()))
                 .build();
     }
 }

@@ -112,5 +112,13 @@ public class ProductRequest {
 
     private Boolean isActive;
 
+    @NotBlank(message = "El campo priority es obligatorio")
+    @Pattern(
+            regexp = "^\\d+$",
+            message = "El campo priority solo puede contener numeros"
+    )
+    private String priority;
+
+
 
 }

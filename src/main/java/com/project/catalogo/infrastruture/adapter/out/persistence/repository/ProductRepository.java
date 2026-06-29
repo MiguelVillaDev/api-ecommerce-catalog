@@ -15,4 +15,13 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Integer>
             Pageable pageable
     );
 
+
+    Page<ProductEntity> findByPriorityAndStockGreaterThan(
+            Integer priority,
+            Integer stock,
+            Pageable pageable
+    );
+
+
+
 }

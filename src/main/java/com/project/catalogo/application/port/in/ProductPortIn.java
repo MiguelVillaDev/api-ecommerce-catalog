@@ -12,4 +12,5 @@ public interface ProductPortIn {
     ProductModel createProduct(ProductModel model);
     ProductModel deleteProduct(ProductModel model);
     Page<ProductModel> findByCategoryId(ProductModel model, Pageable pageable);
+    Page<ProductModel> findByPriority(ProductModel model, Pageable pageable);
 }

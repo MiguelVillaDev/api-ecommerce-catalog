@@ -27,6 +27,7 @@ public class ProductModel {
     private String metaTitle;
     private String metaDescription;
     private Boolean isActive;
+    private Integer priority;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

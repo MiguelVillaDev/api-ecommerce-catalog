@@ -32,6 +32,7 @@ public class ProductMapper extends CommonMapper<ProductEntity, ProductModel> {
                 .webName(entity.getWebName())
                 .urlImage(entity.getUrlImage())
                 .isActive(entity.getIsActive())
+                .priority(entity.getPriority())
                 .category(categoryMapper.convertToModel(entity.getCategory()))
                 .updatedAt(entity.getUpdatedAt())
                 .createdAt(entity.getCreatedAt())
@@ -59,6 +60,7 @@ public class ProductMapper extends CommonMapper<ProductEntity, ProductModel> {
                 .webName(model.getWebName())
                 .urlImage(model.getUrlImage())
                 .isActive(model.getIsActive())
+                .priority(model.getPriority())
                 .build();
     }
 }
