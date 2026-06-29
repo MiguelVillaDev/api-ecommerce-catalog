@@ -2,6 +2,7 @@ package com.project.catalogo.infrastruture.adapter.out.persistence;
 
 import com.project.catalogo.application.port.out.CategoryPortOut;
 import com.project.catalogo.domain.model.CategoryModel;
+import com.project.catalogo.infrastruture.adapter.in.rest.dto.CategoryRequest;
 import com.project.catalogo.infrastruture.adapter.out.persistence.entity.CategoryEntity;
 import com.project.catalogo.infrastruture.adapter.out.persistence.repository.CategoryRepository;
 import com.project.catalogo.infrastruture.mapper.CategoryMapper;
@@ -19,6 +20,18 @@ public class CategoryRepositoryImpl implements CategoryPortOut {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
 
+
+    @Override
+    public CategoryModel findOne(CategoryModel model){
+
+        CategoryEntity entity = categoryRepository.findById(model.getId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Category no existe con id: " + model.getId()
+                ));
+
+        return categoryMapper.convertToModel(entity);
+    }
+
     @Override
     public List<CategoryModel> findAll() {
         return categoryMapper.convertToListModel(categoryRepository.findAll());
@@ -34,14 +47,24 @@ public class CategoryRepositoryImpl implements CategoryPortOut {
     @Override
     public CategoryModel delete(CategoryModel model) {
 
-        CategoryEntity entity = categoryRepository.findById(model.getId())
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Category no existe con id: " + model.getId()
-                ));
+        CategoryEntity entity = categoryMapper.convertToEntity(this.findOne(model));
 
         categoryRepository.delete(entity);
 
         return categoryMapper.convertToModel(entity);
+    }
+
+    @Override
+    public CategoryModel update(CategoryModel model, CategoryRequest request){
+
+        CategoryEntity entity  = categoryMapper.convertToEntity(this.findOne(model));
+
+        categoryMapper.updateEntityFromRequest(entity, request);
+
+
+        return categoryMapper.convertToModel(categoryRepository.save(entity));
+
+
     }
 
 

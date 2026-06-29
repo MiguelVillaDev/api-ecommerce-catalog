@@ -32,6 +32,18 @@ public class CategoryController {
         );
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CommonResponse<CategoryDto>> findById(@PathVariable Integer id){
+        CategoryModel categoryModel = CategoryModel.builder().id(id).build();
+        return ResponseEntity.ok(
+                categoryDtoMapper.buildResponse(
+                        categoryPortIn.findById(categoryModel),
+                        "Categoría obtenida exitosamente"
+                )
+        );
+
+    }
+
     @PostMapping()
     public ResponseEntity<CommonResponse<CategoryDto>> createCategory(
             @Valid @RequestBody CategoryRequest categoryRequest) {
@@ -60,7 +72,17 @@ public class CategoryController {
         );
     }
 
-//    @PutMapping("/{id}");
+    @PatchMapping("/{id}")
+    public ResponseEntity<CommonResponse<CategoryDto>> updateCategory(@PathVariable  Integer id, @Valid @RequestBody CategoryRequest request ){
+        CategoryModel categoryModel = CategoryModel.builder().id(id).build();
+
+        return ResponseEntity.ok(
+                categoryDtoMapper.buildResponse(
+                        categoryPortIn.updateCategory(categoryModel, request),
+                        "Categoria actualizada exitosamente"
+                )
+        );
+    }
 
 
 
