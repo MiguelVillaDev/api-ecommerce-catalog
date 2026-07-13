@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ProductPortIn {
 
+    ProductModel findById (ProductModel model);
     List<ProductModel> findAllProducts();
     ProductModel createProduct(ProductModel model);
     ProductModel deleteProduct(ProductModel model);

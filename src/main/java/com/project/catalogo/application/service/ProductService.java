@@ -4,6 +4,7 @@ import com.project.catalogo.application.port.in.ProductPortIn;
 import com.project.catalogo.application.port.out.ProductPortOut;
 import com.project.catalogo.domain.model.ProductModel;
 import lombok.AllArgsConstructor;
+import org.hibernate.sql.ast.tree.expression.Over;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,11 @@ import java.util.List;
 public class ProductService implements ProductPortIn {
 
     private final ProductPortOut productPortOut;
+
+    @Override
+    public ProductModel findById (ProductModel model){
+        return productPortOut.findByID(model);
+    }
 
     @Override
     public List<ProductModel> findAllProducts(){

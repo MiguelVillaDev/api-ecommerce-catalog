@@ -1,7 +1,7 @@
 package com.project.catalogo.application.port.out;
 
 import com.project.catalogo.domain.model.CategoryModel;
-import com.project.catalogo.infrastruture.adapter.in.rest.dto.CategoryRequest;
+import com.project.catalogo.infrastructure.adapter.in.rest.dto.CategoryRequest;
 
 
 import java.util.List;

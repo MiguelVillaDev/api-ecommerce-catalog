@@ -1,0 +1,177 @@
+openapi: 3.0.3
+
+info:
+  title: API Catálogo de Productos
+  version: 1.0.0
+  description: |
+    API REST para la administración del catálogo de productos.
+
+    Permite gestionar las categorías y productos disponibles en el catálogo,
+    incluyendo operaciones de creación, consulta, actualización y eliminación.
+    La API sigue una arquitectura hexagonal y expone recursos mediante JSON.
+
+servers:
+  - url: /api-catalogo
+    description: Servidor local
+
+tags:
+  - name: Categorías
+    description: Operaciones relacionadas con la administración de categorías del catálogo.
+
+
+
+
+
+paths:
+  /category:
+    get:
+      tags:
+        - Categorías
+      summary: Obtiene el listado de categorías
+      operationId: findAllCategories
+      responses:
+        "200":
+          description: Categorías obtenidas exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Categorías obtenidas exitosamente
+                  response:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CategoryResponse'
+
+    post:
+      tags:
+        - Categorías
+      summary: Crea una nueva categoría
+      operationId: createCategory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+      responses:
+        "201":
+          description: Categoría creada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Categoría creada exitosamente
+                  response:
+                    $ref: '#/components/schemas/CategoryResponse'
+
+  /category/{category_id}:
+    put:
+      tags:
+        - Categorías
+      summary: Actualiza una categoría existente
+      operationId: updateCategory
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          description: Identificador de la categoría.
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+      responses:
+        "200":
+          description: Categoría actualizada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Categoría actualizada exitosamente
+                  response:
+                    $ref: '#/components/schemas/CategoryResponse'
+
+    delete:
+      tags:
+        - Categorías
+      summary: Elimina una categoría
+      operationId: deleteCategory
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          description: Identificador de la categoría.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Categoría eliminada exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Categoría eliminada exitosamente
+
+
+
+
+
+
+components:
+  schemas:
+    CategoryRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Guitarras Eléctricas
+        description:
+          type: string
+          example: Guitarras eléctricas para diversos estilos musicales
+      required:
+        - name
+        - description
+    CategoryResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        name:
+          type: string
+          example: Guitarras Eléctricas
+        description:
+          type: string
+          example: Guitarras eléctricas para diversos estilos musicales
+        created_at:
+          type: string
+          format: date-time
+          example: "2026-06-14T01:47:56.221122"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2026-06-14T01:47:56.221122"
+      required:
+        - id
+        - name
+        - description
+        - created_at
+        - updated_at

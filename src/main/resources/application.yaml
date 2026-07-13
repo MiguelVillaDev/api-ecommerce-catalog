@@ -7,3 +7,9 @@ spring:
 server:
   servlet:
     context-path: /api-catalogo
+
+
+springdoc:
+  swagger-ui:
+    url: /openapi.yml
+    path: /swagger-ui.html
