@@ -44,6 +44,12 @@ public class ProductRepositoryImpl implements ProductPortOut {
     }
 
     @Override
+    public ProductModel update(ProductModel model){
+        ProductEntity entity = productMapper.convertToEntity(model);
+        return productMapper.convertToModel(productRepository.save(entity));
+    }
+
+    @Override
     public ProductModel delete(ProductModel model) {
 
         ProductEntity entity = productRepository.findById(model.getId())

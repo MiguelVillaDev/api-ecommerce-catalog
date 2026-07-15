@@ -10,6 +10,7 @@ public interface ProductPortOut {
     ProductModel findByID(ProductModel productModel);
     List<ProductModel> findAll();
     ProductModel create(ProductModel model);
+    ProductModel update(ProductModel model);
     ProductModel delete(ProductModel model);
     Page<ProductModel> findByCategoryId(ProductModel model, Pageable pageable);
     Page<ProductModel> findByPriority(ProductModel model, Pageable pageable);

@@ -11,6 +11,7 @@ public interface ProductPortIn {
     ProductModel findById (ProductModel model);
     List<ProductModel> findAllProducts();
     ProductModel createProduct(ProductModel model);
+    ProductModel updateProduct(ProductModel model);
     ProductModel deleteProduct(ProductModel model);
     Page<ProductModel> findByCategoryId(ProductModel model, Pageable pageable);
     Page<ProductModel> findByPriority(ProductModel model, Pageable pageable);

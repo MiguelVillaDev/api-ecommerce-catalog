@@ -64,6 +64,17 @@ public class ProductController {
         );
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<CommonResponse<ProductDto>> updateProduct(@PathVariable Integer id, @Valid @RequestBody ProductRequest request){
+        ProductModel productModel = productDtoMapper.convertToModel(request);
+        productModel.setId(id);
+
+        return ResponseEntity.ok(productDtoMapper.buildResponse(productPortIn.updateProduct(productModel),
+                "Producto actualizado correctamente")
+
+        );
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<CommonResponse<ProductDto>> deleteProduct(
             @PathVariable Integer id) {
